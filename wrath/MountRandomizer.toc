@@ -3,6 +3,8 @@
 ## Author: austen
 ## Notes: Summons random mounts.
 
-## SavedVariables: MountRandomizerDB
+## SavedVariables: MountRandomizerLookupTablesDB, MountRandomizerDB
 
+MountRandomizerLookupTables.lua
+MountRandomizerOptions.lua
 MountRandomizer.lua
