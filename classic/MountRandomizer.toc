@@ -1,0 +1,8 @@
+## Interface: 30400
+## Title: Mount Randomizer
+## Author: austen
+## Notes: Summons random mounts.
+
+## SavedVariables: MountRandomizerDB
+
+MountRandomizer.lua
