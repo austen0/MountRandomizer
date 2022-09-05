@@ -12,7 +12,6 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
-- [ ] move `creatureSpellID` lookup tables to separate file
 - [ ] clean up redundant syntax, especially around population of `mountSpellPool`
 - [ ] add debugging
     - [ ] implement optional execution logging
@@ -23,3 +22,4 @@ World of Warcraft add-on for summoning random mounts.
     - [ ] add button to automatically create a macro for invoking from action bar
 - [ ] set up automatic packaging workflow
 - [ ] upload to curse
+- [x] move `creatureSpellID` lookup tables to separate file
