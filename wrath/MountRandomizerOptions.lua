@@ -3,12 +3,21 @@ local f = CreateFrame("Frame")
 f.defaults = {
 	groundMountTypes = "journeyman",
 	flyingMountTypes = "master",
+	dismountWhileFlying = false,
 };
 
 -- Initialize user options db after addon has loaded.
 function f:OnEvent(event, addOnName)
 	if addOnName == "MountRandomizer" then
-		MountRandomizerDB = MountRandomizerDB or CopyTable(self.defaults)
+		if not MountRandomizerDB then
+			MountRandomizerDB = CopyTable(self.defaults)
+		else
+			for k, v in pairs(self.defaults) do
+				if MountRandomizerDB[k] == nil then
+					MountRandomizerDB[k] = v
+				end
+			end
+		end
 		self.db = MountRandomizerDB
 		self:SetupOptions()
 	end
@@ -25,6 +34,8 @@ function f:SetupOptions()
 	self.panel.name = "MountRandomizer"
 	local info = {}
 
+    -- Create dropdown for selecting which ground mount types to summon from (eg.
+	-- apprentice/journeyman/both).
 	local groundMountTypesDropdown = CreateFrame(
 		"Frame", "GroundMountTypesDropdown", self.panel, "UIDropDownMenuTemplate")
 	groundMountTypesDropdown:SetPoint("TOPLEFT", 20, -20)
@@ -44,7 +55,10 @@ function f:SetupOptions()
 	end
 	GroundMountTypesDropdownText:SetText("Ground Mount Types")
 	
-	local flyingMountTypesDropdown = CreateFrame("Frame", "FlyingMountTypesDropdown", self.panel, "UIDropDownMenuTemplate")
+    -- Create dropdown for selecting which flying mount types to summon from (eg.
+	-- expert/master/both).
+	local flyingMountTypesDropdown = CreateFrame(
+		"Frame", "FlyingMountTypesDropdown", self.panel, "UIDropDownMenuTemplate")
 	flyingMountTypesDropdown:SetPoint("TOPLEFT", 20, -50)
 	flyingMountTypesDropdown.initialize = function()
 		wipe(info)
@@ -61,6 +75,21 @@ function f:SetupOptions()
 		end
 	end
 	FlyingMountTypesDropdownText:SetText("Flying Mount Types")
-	
+
+	-- Create a checkbox to allow toggling whether the addon will dismount during flight if run
+	-- when a mount is already summoned.
+	local dismountWhileFlyingCheckbox = CreateFrame(
+		"CheckButton",
+		"DismountWhileFlyingCheckbox",
+		self.panel,
+		"InterfaceOptionsCheckButtonTemplate")
+	dismountWhileFlyingCheckbox:SetPoint("TOPLEFT", 20, -80)
+	dismountWhileFlyingCheckbox:SetScript("OnClick", function(self)
+		MountRandomizerDB.dismountWhileFlying = self:GetChecked()
+	end)
+	DismountWhileFlyingCheckboxText:SetText("Dismount while flying")
+	dismountWhileFlyingCheckbox:SetChecked(MountRandomizerDB.dismountWhileFlying)
+
+    -- Add MountRandomizer panel to the interface options window.
 	InterfaceOptions_AddCategory(self.panel)
 end

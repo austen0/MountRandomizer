@@ -12,9 +12,6 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
-- [ ] fall back on ground mounts if journal has no flying mounts while in flyable area
-- [ ] improve handling of empty mount journal
-- [ ] clean up redundant syntax, especially around population of `mountSpellPool`
 - [ ] add debugging
     - [ ] implement optional execution logging
     - [ ] create function to print out mounts that are not found in lookup tables
@@ -22,7 +19,10 @@ World of Warcraft add-on for summoning random mounts.
     - [ ] add tooltip text
     - [ ] correct size of dropdown lists
     - [ ] add button to automatically create a macro for invoking from action bar
-    - [ ] add option for whether character should dismount while currently flying
+    - [x] add option for whether character should dismount while currently flying
 - [ ] set up automatic packaging workflow
 - [ ] upload to curse
 - [x] move `creatureSpellID` lookup tables to separate file
+- [x] fall back on ground mounts if journal has no flying mounts while in flyable area
+- [x] improve handling of empty mount journal
+- [x] clean up redundant syntax, especially around population of `mountSpellPool`
