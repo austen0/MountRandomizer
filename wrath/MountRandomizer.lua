@@ -25,6 +25,7 @@ local function MakeMountPool()
         journeyman = 0,
         expert = 0,
         master = 0,
+        unknown = 0,
     }
     for idx = 1, GetNumCompanions("MOUNT"), 1 do
         local creatureID, creatureName, creatureSpellID = GetCompanionInfo("MOUNT", idx)
