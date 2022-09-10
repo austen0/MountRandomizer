@@ -6,5 +6,5 @@
 ## SavedVariables: MountRandomizerDB
 
 MountRandomizerInit.lua
-MountRandomizerLookupTables.lua
+MountDB.lua
 MountRandomizer.lua

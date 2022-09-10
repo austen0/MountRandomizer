@@ -1,8 +1,9 @@
 MountRandomizer = {
     defaultSettings = {
-        groundMountTypes = "journeyman",
         flyingMountTypes = "master",
         dismountWhileFlying = false,
+        minGroundSpeed = 1.6,
+        minFlyingSpeed = 2.5,
     },
 }
 
@@ -10,8 +11,8 @@ MountRandomizer = {
 
 -- Search array for given value.
 function MountRandomizer.InTable(t, val)
-    for _, arrVal in pairs(t) do
-        if arrVal == val then
+    for _, tVal in pairs(t) do
+        if tVal == val then
             return true
         end
     end
@@ -68,48 +69,53 @@ function f:SetupOptions()
     self.panel.name = "MountRandomizer"
     local info = {}
 
-    -- Create dropdown for selecting which ground mount types to summon from (eg.
-    -- apprentice/journeyman/both).
-    local groundMountTypesDropdown = CreateFrame(
-        "Frame", "GroundMountTypesDropdown", self.panel, "UIDropDownMenuTemplate")
-    groundMountTypesDropdown:SetPoint("TOPLEFT", 20, -20)
-    groundMountTypesDropdown.initialize = function()
+    -- Create dropdown for selecting the minimum speed of a ground mount to include in summon pool.
+    local minGroundSpeedDropdown = CreateFrame(
+        "Frame", "MinGroundSpeedDropdown", self.panel, "UIDropDownMenuTemplate")
+    minGroundSpeedDropdown:SetPoint("TOPLEFT", 20, -20)
+    minGroundSpeedDropdown.initialize = function()
         wipe(info)
-        local mountTypes = {"apprentice", "journeyman", "both"}
-        for _, mountType in pairs(mountTypes) do
-            info.text = mountType
-            info.value = mountType
+        local options = {
+            {text = "+60%", value = 1.6},
+            {text = "+100%", value = 2},
+        }
+        for _, option in pairs(options) do
+            info.text = option.text 
+            info.value = option.value
             info.func = function(self)
-                MountRandomizerDB.groundMountTypes = self.value
-                GroundMountTypesDropdownText:SetText(self:GetText())
+                MountRandomizerDB.minGroundSpeed = self.value
+                MinGroundSpeedDropdownText:SetText(self:GetText())
             end
-            info.checked = (info.value == MountRandomizerDB.groundMountTypes)
+            info.checked = (info.value == MountRandomizerDB.minGroundSpeed)
             UIDropDownMenu_AddButton(info)
         end
     end
-    GroundMountTypesDropdownText:SetText("Ground Mount Types")
-    
-    -- Create dropdown for selecting which flying mount types to summon from (eg.
-    -- expert/master/both).
-    local flyingMountTypesDropdown = CreateFrame(
-        "Frame", "FlyingMountTypesDropdown", self.panel, "UIDropDownMenuTemplate")
-    flyingMountTypesDropdown:SetPoint("TOPLEFT", 20, -50)
-    flyingMountTypesDropdown.initialize = function()
-        wipe(info)
-        local mountTypes = {"expert", "master", "both"}
-        for _, mountType in pairs(mountTypes) do
-            info.text = mountType
-            info.value = mountType
-            info.func = function(self)
-                MountRandomizerDB.flyingMountTypes = self.value
-                FlyingMountTypesDropdownText:SetText(self:GetText())
-            end
-            info.checked = (info.value == MountRandomizerDB.flyingMountTypes)
-            UIDropDownMenu_AddButton(info)
-        end
-    end
-    FlyingMountTypesDropdownText:SetText("Flying Mount Types")
+    MinGroundSpeedDropdownText:SetText("Minimum Ground Mount Speed")
 
+    -- Create dropdown for selecting the minimum speed of a ground mount to include in summon pool.
+    local minFlyingSpeedDropdown = CreateFrame(
+        "Frame", "MinFlyingSpeedDropdown", self.panel, "UIDropDownMenuTemplate")
+    minFlyingSpeedDropdown:SetPoint("TOPLEFT", 20, -50)
+    minFlyingSpeedDropdown.initialize = function()
+        wipe(info)
+        local options = {
+            {text = "+150%", value = 2.5},
+            {text = "+280%", value = 3.8},
+            {text = "+310%", value = 4.1},
+        }
+        for _, option in pairs(options) do
+            info.text = option.text 
+            info.value = option.value
+            info.func = function(self)
+                MountRandomizerDB.minFlyingSpeed = self.value
+                MinFlyingSpeedDropdownText:SetText(self:GetText())
+            end
+            info.checked = (info.value == MountRandomizerDB.minFlyingSpeed)
+            UIDropDownMenu_AddButton(info)
+        end
+    end
+    MinFlyingSpeedDropdownText:SetText("Minimum Flying Mount Speed")
+    
     -- Create a checkbox to allow toggling whether the addon will dismount during flight if run
     -- when a mount is already summoned.
     local dismountWhileFlyingCheckbox = CreateFrame(

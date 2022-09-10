@@ -12,7 +12,6 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
-- [ ] handle profession-specific mounts
 - [ ] handle water mounts
 - [ ] add debugging
     - [ ] implement optional execution logging
@@ -24,6 +23,7 @@ World of Warcraft add-on for summoning random mounts.
     - [x] add option for whether character should dismount while currently flying
 - [ ] set up automatic packaging workflow
 - [ ] upload to curse
+- [x] handle profession-specific mounts
 - [x] move `creatureSpellID` lookup tables to separate file
 - [x] fall back on ground mounts if journal has no flying mounts while in flyable area
 - [x] improve handling of empty mount journal
