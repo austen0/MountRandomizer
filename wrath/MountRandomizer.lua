@@ -1,24 +1,6 @@
--- Search array for given value.
-local function InTable(t, val)
-    for _, arrVal in pairs(t) do
-        if arrVal == val then
-            return true
-        end
-    end
-    return false
-end
-
--- Get table length.
-local function GetTableLength(t)
-  local count = 0
-  for _ in pairs(t) do count = count + 1 end
-  return count
-end
-
 -- Iterate through mount journal and identify type. Return a mapping of mount journal index to
 -- required riding skill.
-local function MakeMountPool()
-    local ldb = MountRandomizerLookupTablesDB
+function MountRandomizer:MakeMountPool()
     local mountPool = {}
     local mountPoolCounts = {
         apprentice = 0,
@@ -30,13 +12,13 @@ local function MakeMountPool()
     for idx = 1, GetNumCompanions("MOUNT"), 1 do
         local creatureID, creatureName, creatureSpellID = GetCompanionInfo("MOUNT", idx)
         local mountType
-        if InTable(ldb.expertSpellIDs, creatureSpellID) then
+        if self.InTable(self.lookupTables.expertSpellIDs, creatureSpellID) then
             mountType = "expert"
-        elseif InTable(ldb.masterSpellIDs, creatureSpellID) then
+        elseif self.InTable(self.lookupTables.masterSpellIDs, creatureSpellID) then
             mountType = "master"
-        elseif InTable(ldb.apprenticeSpellIDs, creatureSpellID) then
+        elseif self.InTable(self.lookupTables.apprenticeSpellIDs, creatureSpellID) then
             mountType = "apprentice"
-        elseif InTable(ldb.journeymanSpellIDs, creatureSpellID) then
+        elseif self.InTable(self.lookupTables.journeymanSpellIDs, creatureSpellID) then
             mountType = "journeyman"
         else
             mountType = "unknown"
@@ -47,29 +29,22 @@ local function MakeMountPool()
     return mountPool, mountPoolCounts
 end
 
--- Iterate through the skill list and return the riding skill rank.
-local function GetRidingSkill()
-    for i = 1, GetNumSkillLines() do
-        local skillName, isHeader, isExpanded, skillRank = GetSkillLineInfo(i)
-        if skillName == "Riding" then
-            return skillRank
-        end
-    end
-    return 0
-end
-
-function RandMount(msg, editbox)
+-- Summon a randomly selected mount.
+function MountRandomizer:RandMount()
     local db = MountRandomizerDB
-    local ridingSkill = GetRidingSkill()
+
+    local ridingSkill = self.GetSkillRank("Riding")
 
     -- If not trained in riding, stop execution.
     if ridingSkill == 0 then
         print("[MountRandomizer] You are not trained in riding.")
+        return
     end
 
     -- If mount journal is empty, stop execution.
     if GetNumCompanions("MOUNT") == 0 then
         print("[MountRandomizer] Your mount journal is empty.")
+        return
     end
 
     -- If not in mountable area, send log and stop execution.
@@ -78,23 +53,29 @@ function RandMount(msg, editbox)
         return
     end
 
+    -- If not alive, send log and stop execution.
+    if UnitIsDeadOrGhost("player") then
+        print("[Mount Randomizer] You're dead.")
+        return
+    end
+
     -- If already mounted, dismount and stop execution.
     if IsMounted() then
-        if (not IsFlying()) or db.dismountWhileFlying then
+        if not IsFlying() or db.dismountWhileFlying then
             Dismount()
         end
         return
     end
     
     -- Categorize all mounts in journal.
-    local mountPool, mountPoolCounts = MakeMountPool()
+    local mountPool, mountPoolCounts = self:MakeMountPool()
 
     -- Figure out which mounts to summon from based on skill level, flyable area, etc.
     local summonPool = {}
     if
         IsFlyableArea()
         and ridingSkill >= 225
-        and InTable({"expert", "both"}, db.flyingMountTypes)
+        and self.InTable({"expert", "both"}, db.flyingMountTypes)
         and mountPoolCounts.expert > 0
     then
         for k, v in pairs(mountPool) do
@@ -106,7 +87,7 @@ function RandMount(msg, editbox)
     if
         IsFlyableArea()
         and ridingSkill >= 300
-        and InTable({"master", "both"}, db.flyingMountTypes)
+        and self.InTable({"master", "both"}, db.flyingMountTypes)
         and mountPoolCounts.master > 0
     then
         for k, v in pairs(mountPool) do
@@ -118,7 +99,7 @@ function RandMount(msg, editbox)
     if
         (not IsFlyableArea() or ridingSkill < 225)
         and ridingSkill >= 150
-        and InTable({"journeyman", "both"}, db.groundMountTypes)
+        and self.InTable({"journeyman", "both"}, db.groundMountTypes)
         and mountPoolCounts.journeyman > 0
     then
         for k, v in pairs(mountPool) do
@@ -129,7 +110,7 @@ function RandMount(msg, editbox)
     end
     if
         (not IsFlyableArea() or ridingSkill < 225)
-        and InTable({"apprentice", "both"}, db.groundMountTypes)
+        and self.InTable({"apprentice", "both"}, db.groundMountTypes)
         and mountPoolCounts.apprentice > 0
     then
         for k, v in pairs(mountPool) do
@@ -140,7 +121,8 @@ function RandMount(msg, editbox)
     end
 
     
-    local poolLength = GetTableLength(summonPool)
+    -- Randomly select a mount from the filtered pool and summon it.
+    local poolLength = self.GetTableLength(summonPool)
     if poolLength == 0 then
         print("[Mount Randomizer] No eligible mounts found. This is probably an addon error.")
         return
@@ -149,6 +131,10 @@ function RandMount(msg, editbox)
     CallCompanion("MOUNT", summonPool[summonIDX])
 end
 
--- Register a slash command for RandMount()
+local function SlashHandler(msg, editbox)
+    MountRandomizer:RandMount()
+end
+
+-- Register a slash commands.
 SLASH_RANDMOUNT1 = '/randmount';
-SlashCmdList["RANDMOUNT"] = RandMount;
+SlashCmdList["RANDMOUNT"] = SlashHandler;

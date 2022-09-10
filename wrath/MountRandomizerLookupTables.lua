@@ -2,7 +2,7 @@
 -- used because the GetCompanionInfo() api function does not return the mountType bitfield that
 -- it's supposed to and producing this list was easier than trying to go off of the creature ID.
 
-MountRandomizerLookupTablesDB = {
+local MountRandomizerLookupTables = {
 
     apprenticeSpellIDs = {
         458, 459, 468, 470, 471, 472, 578, 579, 580, 581, 6648, 6653, 6654, 6777, 6896, 6897, 6898,
@@ -40,3 +40,5 @@ MountRandomizerLookupTablesDB = {
         64927, 65439, 66087, 66088, 67336, 69395, 71810, 72807, 72808,
     },
 }
+
+MountRandomizer.lookupTables = MountRandomizerLookupTables

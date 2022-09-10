@@ -12,6 +12,8 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
+- [ ] handle profession-specific mounts
+- [ ] handle water mounts
 - [ ] add debugging
     - [ ] implement optional execution logging
     - [ ] create function to print out mounts that are not found in lookup tables

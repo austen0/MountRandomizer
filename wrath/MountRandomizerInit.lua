@@ -1,24 +1,59 @@
--- Create top-level frame for addon interface options and define default values.
+MountRandomizer = {
+    defaultSettings = {
+        groundMountTypes = "journeyman",
+        flyingMountTypes = "master",
+        dismountWhileFlying = false,
+    },
+}
+
+------------------------------------ LUA HELPER FUNCTIONS ------------------------------------------
+
+-- Search array for given value.
+function MountRandomizer.InTable(t, val)
+    for _, arrVal in pairs(t) do
+        if arrVal == val then
+            return true
+        end
+    end
+    return false
+end
+
+-- Get table length.
+function MountRandomizer.GetTableLength(t)
+  local count = 0
+  for _ in pairs(t) do count = count + 1 end
+  return count
+end
+
+------------------------------------ WOW HELPER FUNCTIONS ------------------------------------------
+
+-- Iterate through the skill list and return the riding skill rank.
+function MountRandomizer.GetSkillRank(skill)
+    for i = 1, GetNumSkillLines() do
+        local skillName, isHeader, isExpanded, skillRank = GetSkillLineInfo(i)
+        if skillName == skill then
+            return skillRank
+        end
+    end
+    return 0
+end
+
+------------------------------------ OPTIONS PANEL CREATION ----------------------------------------
+
 local f = CreateFrame("Frame")
-f.defaults = {
-    groundMountTypes = "journeyman",
-    flyingMountTypes = "master",
-    dismountWhileFlying = false,
-};
 
 -- Initialize user options db after addon has loaded.
 function f:OnEvent(event, addOnName)
     if addOnName == "MountRandomizer" then
         if not MountRandomizerDB then
-            MountRandomizerDB = CopyTable(self.defaults)
+            MountRandomizerDB = CopyTable(MountRandomizer.defaultSettings)
         else
-            for k, v in pairs(self.defaults) do
+            for k, v in pairs(MountRandomizer.defaultSettings) do
                 if MountRandomizerDB[k] == nil then
                     MountRandomizerDB[k] = v
                 end
             end
         end
-        self.db = MountRandomizerDB
         self:SetupOptions()
     end
 end
@@ -28,7 +63,6 @@ f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", f.OnEvent)
 
 -- Populate addon options frame.
--- TODO(austen0): can/should this be local?
 function f:SetupOptions()
     self.panel = CreateFrame("Frame")
     self.panel.name = "MountRandomizer"
