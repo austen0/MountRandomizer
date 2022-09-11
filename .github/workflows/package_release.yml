@@ -1,0 +1,27 @@
+name: Package Release
+on:
+  # Manual trigger from Github Actions tab.
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: "Release version:"
+        required: true
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REL_VER: v${{ github.event.inputs.releaseVersion }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Move addon assets to parent directory and create zip.
+        run: |
+          cp -r "${GITHUB_WORKSPACE}/wrath" MountRandomizer
+          cp "${GITHUB_WORKSPACE}/LICENSE" MountRandomizer/LICENSE
+          zip -r "MountRandomizer-${REL_VER}-wrath.zip" MountRandomizer
+          
+      - name: Create release draft
+        run: gh release create $REL_VER --draft --title $REL_VER "MountRandomizer-${REL_VER}-wrath.zip"
