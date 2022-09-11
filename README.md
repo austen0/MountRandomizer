@@ -13,6 +13,7 @@ World of Warcraft add-on for summoning random mounts.
 ## TODO for v1.0
 
 - [ ] handle water mounts
+- [ ] handle AQ mounts
 - [ ] add debugging
     - [ ] implement optional execution logging
     - [ ] create function to print out mounts that are not found in lookup tables
@@ -21,10 +22,15 @@ World of Warcraft add-on for summoning random mounts.
     - [ ] correct size of dropdown lists
     - [ ] add button to automatically create a macro for invoking from action bar
     - [x] add option for whether character should dismount while currently flying
-- [ ] set up automatic packaging workflow
 - [ ] upload to curse
+- [x] set up automatic packaging workflow
 - [x] handle profession-specific mounts
 - [x] move `creatureSpellID` lookup tables to separate file
 - [x] fall back on ground mounts if journal has no flying mounts while in flyable area
 - [x] improve handling of empty mount journal
 - [x] clean up redundant syntax, especially around population of `mountSpellPool`
+
+## v1.0+ Potential Features
+
+- [ ] weighting system to make favored mounts more likely to be selected
+- [ ] !pmount weakaura creation
