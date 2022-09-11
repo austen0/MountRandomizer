@@ -1469,7 +1469,11 @@ function MountDB:Query(query)
     -- Omit profession mounts if the associated profession isn't currently trained.
     for _, mount in pairs(results_tmp) do
         if mount.professionReq ~= nil then
-            if not self.InTable(query.trainedProfessions, professionEnum[mount.professionReq]) then
+            if
+                MountRandomizer.GetTableLength(query.trainedProfessions) == 0
+                or not MountRandomizer.InTable(
+                    query.trainedProfessions, professionEnum[mount.professionReq])
+            then
                 results = RemoveByID(results, mount.npcID)
             end
         end
