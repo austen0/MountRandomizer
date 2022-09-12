@@ -33,10 +33,11 @@ function MountRandomizer:CanPlayerMount()
         return false
     end
 
-    if GetShapeshiftFormID() ~= nil then
-        print("[MountRandomizer] Cannot summon mounts while shapeshifted.")
-        return false
-    end
+    -- TODO: https://github.com/austen0/MountRandomizer/issues/1
+    -- if GetShapeshiftFormID() ~= nil then
+    --     print("[MountRandomizer] Cannot summon mounts while shapeshifted.")
+    --     return false
+    -- end
 
     if GetNumCompanions("MOUNT") == 0 then
         print("[MountRandomizer] Your mount journal is empty.")
