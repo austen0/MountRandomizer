@@ -12,6 +12,7 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
+- [ ] handle cold-weather flying
 - [ ] handle water mounts
 - [ ] handle AQ mounts
 - [ ] add debugging
@@ -33,4 +34,6 @@ World of Warcraft add-on for summoning random mounts.
 ## v1.0+ Potential Features
 
 - [ ] weighting system to make favored mounts more likely to be selected
-- [ ] !pmount weakaura creation
+- [ ] weakaura creation:
+    - [ ] party mount
+    - [ ] party follow
