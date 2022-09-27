@@ -88,6 +88,7 @@ function f:SetupOptions()
     -- Create dropdown for selecting the minimum speed of a ground mount to include in summon pool.
     local minGroundSpeedDropdown = CreateFrame(
         "Frame", "MinGroundSpeedDropdown", self.panel, "UIDropDownMenuTemplate")
+    UIDropDownMenu_SetWidth(minGroundSpeedDropdown, 200)
     minGroundSpeedDropdown:SetPoint("TOPLEFT", 20, -20)
     minGroundSpeedDropdown.initialize = function()
         wipe(info)
@@ -111,6 +112,7 @@ function f:SetupOptions()
     -- Create dropdown for selecting the minimum speed of a ground mount to include in summon pool.
     local minFlyingSpeedDropdown = CreateFrame(
         "Frame", "MinFlyingSpeedDropdown", self.panel, "UIDropDownMenuTemplate")
+    UIDropDownMenu_SetWidth(minFlyingSpeedDropdown, 200)
     minFlyingSpeedDropdown:SetPoint("TOPLEFT", 20, -50)
     minFlyingSpeedDropdown.initialize = function()
         wipe(info)

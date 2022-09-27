@@ -12,19 +12,13 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
-- [ ] handle northrend flying
-    - [ ] loaned mounts
-    - [x] cold-weather flying
-- [ ] handle AQ mounts
-- [ ] add debugging
-    - [ ] implement optional execution logging
-    - [ ] create function to print out mounts that are not found in lookup tables
 - [ ] improve interface options panel
-    - [ ] add tooltip text
-    - [ ] correct size of dropdown lists
+    - [ ] add button to print out mounts that are not found in lookup tables
     - [ ] add button to automatically create a macro for invoking from action bar
+    - [x] correct size of dropdown lists
     - [x] add option for whether character should dismount while currently flying
 - [ ] upload to curse
+- [x] handle cold-weather flying
 - [x] handle water mounts
 - [x] set up automatic packaging workflow
 - [x] handle profession-specific mounts
@@ -39,3 +33,6 @@ World of Warcraft add-on for summoning random mounts.
 - [ ] weakaura creation:
     - [ ] party mount
     - [ ] party follow
+- [ ] handle AQ mounts
+- [ ] handle loaned flying mounts in northrend
+- [ ] add debugging
