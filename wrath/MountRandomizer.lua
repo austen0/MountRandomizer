@@ -102,8 +102,31 @@ function MountRandomizer:RandMount()
     end
 end
 
+-- Print any mounts in journal that are not matched in the mountDB.
+function MountRandomizer:PrintUnknownMounts()
+    print("[MountRandomizer] Printing unknown mounts in journal...")
+    for journalIndex = 1, GetNumCompanions("MOUNT"), 1 do
+        local npcID, npcName = GetCompanionInfo("MOUNT", journalIndex)
+        local matched = false
+        for _, mount in pairs(self.mountDB.dbFull) do
+            if npcID == mount.npcID then
+                matched = true
+                break
+            end
+        end
+        if not matched then
+            print(npcName, "("..npcID..")")
+        end
+    end
+    print("[MountRandomizer] Operation complete.")
+end
+
 local function SlashHandler(msg, editbox)
-    MountRandomizer:RandMount()
+    if msg == "printunknown" then
+        MountRandomizer:PrintUnknownMounts()
+    else
+        MountRandomizer:RandMount()
+    end
 end
 
 -- Register a slash commands.

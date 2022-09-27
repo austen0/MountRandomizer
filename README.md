@@ -12,11 +12,6 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
-- [ ] improve interface options panel
-    - [ ] add button to print out mounts that are not found in lookup tables
-    - [ ] add button to automatically create a macro for invoking from action bar
-    - [x] correct size of dropdown lists
-    - [x] add option for whether character should dismount while currently flying
 - [ ] upload to curse
 - [x] handle cold-weather flying
 - [x] handle water mounts
@@ -26,6 +21,12 @@ World of Warcraft add-on for summoning random mounts.
 - [x] fall back on ground mounts if journal has no flying mounts while in flyable area
 - [x] improve handling of empty mount journal
 - [x] clean up redundant syntax, especially around population of `mountSpellPool`
+- [x] improve interface options panel
+    - [x] add button to print out mounts that are not found in lookup tables (use
+          `/randmount printunknown`)
+    - [x] add button to automatically create a macro for invoking from action bar
+    - [x] correct size of dropdown lists
+    - [x] add option for whether character should dismount while currently flying
 
 ## v1.0+ Potential Features
 
@@ -33,6 +34,8 @@ World of Warcraft add-on for summoning random mounts.
 - [ ] weakaura creation:
     - [ ] party mount
     - [ ] party follow
-- [ ] handle AQ mounts
-- [ ] handle loaned flying mounts in northrend
+- [ ] additional mount types/cases
+    - [ ] handle AQ mounts
+    - [ ] handle loaned flying mounts in northrend
 - [ ] add debugging
+- [ ] make localization-friendly

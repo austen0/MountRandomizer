@@ -1519,5 +1519,6 @@ function MountDB:Query(query)
 end
 
 
+MountDB.dbFull = mountDB
 MountDB.db = MountDB:BuildDB()
 MountRandomizer.mountDB = MountDB

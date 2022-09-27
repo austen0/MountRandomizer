@@ -89,7 +89,7 @@ function f:SetupOptions()
     local minGroundSpeedDropdown = CreateFrame(
         "Frame", "MinGroundSpeedDropdown", self.panel, "UIDropDownMenuTemplate")
     UIDropDownMenu_SetWidth(minGroundSpeedDropdown, 200)
-    minGroundSpeedDropdown:SetPoint("TOPLEFT", 20, -20)
+    minGroundSpeedDropdown:SetPoint("TOPLEFT", 0, -20)
     minGroundSpeedDropdown.initialize = function()
         wipe(info)
         local options = {
@@ -113,7 +113,7 @@ function f:SetupOptions()
     local minFlyingSpeedDropdown = CreateFrame(
         "Frame", "MinFlyingSpeedDropdown", self.panel, "UIDropDownMenuTemplate")
     UIDropDownMenu_SetWidth(minFlyingSpeedDropdown, 200)
-    minFlyingSpeedDropdown:SetPoint("TOPLEFT", 20, -50)
+    minFlyingSpeedDropdown:SetPoint("TOPLEFT", "MinGroundSpeedDropdown", "BOTTOMLEFT", 0, -5)
     minFlyingSpeedDropdown.initialize = function()
         wipe(info)
         local options = {
@@ -141,12 +141,30 @@ function f:SetupOptions()
         "DismountWhileFlyingCheckbox",
         self.panel,
         "InterfaceOptionsCheckButtonTemplate")
-    dismountWhileFlyingCheckbox:SetPoint("TOPLEFT", 20, -80)
+    dismountWhileFlyingCheckbox:SetPoint("TOPLEFT", "MinFlyingSpeedDropdown", "BOTTOMLEFT", 18, -5)
     dismountWhileFlyingCheckbox:SetScript("OnClick", function(self)
         MountRandomizerDB.dismountWhileFlying = self:GetChecked()
     end)
     DismountWhileFlyingCheckboxText:SetText("Dismount while flying")
     dismountWhileFlyingCheckbox:SetChecked(MountRandomizerDB.dismountWhileFlying)
+
+    -- Create a button that will automatically create a macro that executes /randmount.
+    local createMacroButton = CreateFrame(
+        "Button",
+        "CreateMacroButton",
+         self.panel,
+         "UIPanelButtonTemplate")
+	createMacroButton:SetPoint("TOPLEFT", "DismountWhileFlyingCheckbox", "BOTTOMLEFT", 0, -5)
+    createMacroButton:SetText("Create /randmount macro")
+	createMacroButton:SetWidth(175)
+	createMacroButton:SetScript("OnClick", function()
+        if GetMacroIndexByName("RandMount") == 0 then
+            CreateMacro("RandMount", 132238, "/randmount")
+            print("[MountRandomizer] Macro created.")
+        else
+            print("[MountRandomizer] RandMount macro already exists, no changes made.")
+        end
+	end)
 
     -- Add MountRandomizer panel to the interface options window.
     InterfaceOptions_AddCategory(self.panel)
