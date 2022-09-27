@@ -22,12 +22,6 @@ function MountRandomizer:CanPlayerMount()
         return false
     end
 
-    -- TODO: remove after implementing hanlding for swimming mounts.    
-    if IsSwimming() then
-        print("[MountRandomizer] Cannot summon mounts while swimming (yet).")
-        return false
-    end
-
     if UnitIsDeadOrGhost("player") then
         print("[Mount Randomizer] You're dead.")
         return false
@@ -66,10 +60,12 @@ function MountRandomizer:RandMount()
         ownedMounts = {},
     }
 
-    -- if IsSwimming() then
-    --     summonQuery.preferredType = "Water"
-    if IsFlyableArea() then
-        summonQuery.preferredType = "Flying"
+    if IsSwimming() then
+        summonQuery.preferredType = "Water"
+    elseif IsFlyableArea() then
+        if MountRandomizer.GetPlayerContinent() ~= "Northrend" or IsSpellKnown(54197) then
+            summonQuery.preferredType = "Flying"
+        end
     end 
 
     if self.GetSkillRank("Engineering") > 0 then

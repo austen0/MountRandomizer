@@ -12,8 +12,9 @@ World of Warcraft add-on for summoning random mounts.
 
 ## TODO for v1.0
 
-- [ ] handle cold-weather flying
-- [ ] handle water mounts
+- [ ] handle northrend flying
+    - [ ] loaned mounts
+    - [x] cold-weather flying
 - [ ] handle AQ mounts
 - [ ] add debugging
     - [ ] implement optional execution logging
@@ -24,6 +25,7 @@ World of Warcraft add-on for summoning random mounts.
     - [ ] add button to automatically create a macro for invoking from action bar
     - [x] add option for whether character should dismount while currently flying
 - [ ] upload to curse
+- [x] handle water mounts
 - [x] set up automatic packaging workflow
 - [x] handle profession-specific mounts
 - [x] move `creatureSpellID` lookup tables to separate file

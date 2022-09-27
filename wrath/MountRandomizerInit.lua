@@ -39,6 +39,22 @@ function MountRandomizer.GetSkillRank(skill)
     return 0
 end
 
+function MountRandomizer.GetPlayerContinent()
+    local mapID = C_Map.GetBestMapForUnit("player")
+    local currMapType
+    while currMapType ~= 2 do
+        local mapInfo = C_Map.GetMapInfo(mapID)
+        currMapType = mapInfo.mapType
+        if currMapType < 2 then
+            print("[MountRandomizer] Unable to determine player continent.")
+        end
+        if mapInfo.mapType == 2 then
+            return mapInfo.name
+        end
+        mapID = mapInfo.parentMapID
+    end
+end
+
 ------------------------------------ OPTIONS PANEL CREATION ----------------------------------------
 
 local f = CreateFrame("Frame")

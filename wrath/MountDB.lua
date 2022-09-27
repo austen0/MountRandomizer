@@ -1481,13 +1481,13 @@ function MountDB:Query(query)
     results_tmp = CopyTable(results)
 
     -- Filter mount pool based on preferred mount type (context based).
-    -- if HasType(results, "Water") and query.preferredType == "Water" then
-    --     for _, mount in pairs(results_tmp) do
-    --         if typeEnum[mount.type] ~= "Water" then
-    --             results = RemoveByID(results, mount.npcID)
-    --         end
-    --     end
-    if HasType(results, "Flying") and query.preferredType == "Flying" then
+    if HasType(results, "Water") and query.preferredType == "Water" then
+        for _, mount in pairs(results_tmp) do
+            if typeEnum[mount.type] ~= "Water" then
+                results = RemoveByID(results, mount.npcID)
+            end
+        end
+    elseif HasType(results, "Flying") and query.preferredType == "Flying" then
         for _, mount in pairs(results_tmp) do
             if typeEnum[mount.type] ~= "Flying" then
                 results = RemoveByID(results, mount.npcID)
