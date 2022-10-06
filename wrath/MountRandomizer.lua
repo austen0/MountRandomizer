@@ -48,21 +48,21 @@ function MountRandomizer:CanPlayerMount()
 end
 
 -- Summon a randomly selected mount.
-function MountRandomizer:RandMount()
+function MountRandomizer:RandMount(forcedType)
     if not self:CanPlayerMount() then
         return
     end
     
     -- Prep query against mount pool based on current player context.
     local summonQuery = {
-        preferredType = "Ground",
+        preferredType = MountRandomizer.IfNil("Ground", forcedType),
         trainedProfessions = {},
         ownedMounts = {},
     }
 
-    if IsSwimming() then
+    if IsSwimming() and forcedType == nil then
         summonQuery.preferredType = "Water"
-    elseif IsFlyableArea() then
+    elseif IsFlyableArea() and forcedType == nil then
         if MountRandomizer.GetPlayerContinent() ~= "Northrend" or IsSpellKnown(54197) then
             summonQuery.preferredType = "Flying"
         end
@@ -122,10 +122,19 @@ function MountRandomizer:PrintUnknownMounts()
 end
 
 local function SlashHandler(msg, editbox)
-    if msg == "printunknown" then
+    if msg == "" then
+        MountRandomizer:RandMount()
+    elseif msg == "ground" then
+        MountRandomizer:RandMount("Ground")
+    elseif msg == "flying" then
+        MountRandomizer:RandMount("Flying")
+    elseif msg == "water" then
+        MountRandomizer:RandMount("Water")
+    elseif msg == "printunknown" then
         MountRandomizer:PrintUnknownMounts()
     else
-        MountRandomizer:RandMount()
+        print("[MountRandomizer] ERROR: Unknown argument.")
+        print("[MountRandomizer] Valid args: ground, flying, water, printunknown")
     end
 end
 

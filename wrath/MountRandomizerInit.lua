@@ -9,6 +9,15 @@ MountRandomizer = {
 
 ------------------------------------ LUA HELPER FUNCTIONS ------------------------------------------
 
+-- Return value if input is nil.
+function MountRandomizer.IfNil(ret, val)
+    if val == nil then
+        return ret
+    else
+        return val
+    end
+end
+
 -- Search array for given value.
 function MountRandomizer.InTable(t, val)
     for _, tVal in pairs(t) do
