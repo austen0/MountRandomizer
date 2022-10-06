@@ -1451,6 +1451,7 @@ function MountDB:BuildDB()
     return db
 end
 
+-- Query the mount database and return matching mounts.
 function MountDB:Query(query)
     local results = {}
     local results_tmp = {}
@@ -1460,6 +1461,16 @@ function MountDB:Query(query)
         for _, npcID in pairs(query.ownedMounts) do
             if mount.npcID == npcID then
                 table.insert(results, mount)
+            end
+        end
+    end
+    results_tmp = CopyTable(results)
+
+    -- Omit mounts in user blacklist.
+    if MountRandomizer.GetTableLength(MountRandomizerDB.mountBlacklist) > 0 then
+        for _, mount in pairs(results_tmp) do
+            if MountRandomizer.InTable(MountRandomizerDB.mountBlacklist, mount.npcID) then
+                results = RemoveByID(results, mount.npcID)
             end
         end
     end

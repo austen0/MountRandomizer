@@ -4,6 +4,7 @@ MountRandomizer = {
         dismountWhileFlying = false,
         minGroundSpeed = 1.6,
         minFlyingSpeed = 2.5,
+        mountBlacklist = {},
     },
 }
 

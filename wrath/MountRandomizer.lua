@@ -121,6 +121,50 @@ function MountRandomizer:PrintUnknownMounts()
     print("[MountRandomizer] Operation complete.")
 end
 
+-- Add a mount to the user blacklist.
+function MountRandomizer:BlacklistMount(npcID)
+    local mountName
+    for _, mount in pairs(self.mountDB.dbFull) do
+        if npcID == mount.npcID then
+            mountName = mount.name
+            break
+        end
+    end
+    if mountName == nil then
+        print("[MountRandomizer] Mount not recognized, no action taken.")
+    elseif self.InTable(MountRandomizerDB.mountBlacklist, npcID) then
+        print("[MountRandomizer] Mount already in blacklist:", mountName)
+    else
+        table.insert(MountRandomizerDB.mountBlacklist, npcID)
+        print("[MountRandomizer] Added mount to blacklist:", mountName)
+    end
+end
+
+-- Add a mount to the user blacklist.
+function MountRandomizer:RemoveMountFromBlacklist(npcID)
+    local mountName
+    for _, mount in pairs(self.mountDB.dbFull) do
+        if npcID == mount.npcID then
+            mountName = mount.name
+            break
+        end
+    end
+    if mountName == nil then
+        print("[MountRandomizer] Mount not recognized, no action taken.")
+    elseif not self.InTable(MountRandomizerDB.mountBlacklist, npcID) then
+        print("[MountRandomizer] Mount not on blacklist:", mountName)
+    else
+        local newBlacklist = {}
+        for _, mountID in pairs(MountRandomizerDB.mountBlacklist) do
+            if mountID ~= npcID then
+                table.insert(newBlacklist, mountID)
+            end
+        end
+        MountRandomizerDB.mountBlacklist = newBlacklist
+        print("[MountRandomizer] Removed mount from blacklist:", mountName)
+    end
+end
+
 local function SlashHandler(msg, editbox)
     if msg == "" then
         MountRandomizer:RandMount()
