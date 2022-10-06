@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="MOUNTRANDOMIZER_AUTOSUMMON" header="MOUNTRANDOMIZER">
+        MountRandomizer:RandMount()
+    </Binding>
+</Bindings>

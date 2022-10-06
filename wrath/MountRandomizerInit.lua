@@ -55,6 +55,14 @@ function MountRandomizer.GetPlayerContinent()
     end
 end
 
+-------------------------------- KEYBINDING LOCALIZATION STRINGS -----------------------------------
+
+BINDING_HEADER_MOUNTRANDOMIZER = "MountRandomizer"
+BINDING_NAME_MOUNTRANDOMIZER_AUTOSUMMON = "Summon Mount (Auto)"
+-- BINDING_NAME_MOUNTRANDOMIZER_GROUNDSUMMON = "Summon Mount (Ground)"
+-- BINDING_NAME_MOUNTRANDOMIZER_FLYINGSUMMON = "Summon Mount (Flying)"
+-- BINDING_NAME_MOUNTRANDOMIZER_WATERSUMMON = "Summon Mount (Water)"
+
 ------------------------------------ OPTIONS PANEL CREATION ----------------------------------------
 
 local f = CreateFrame("Frame")
