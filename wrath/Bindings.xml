@@ -2,4 +2,13 @@
     <Binding name="MOUNTRANDOMIZER_AUTOSUMMON" header="MOUNTRANDOMIZER">
         MountRandomizer:RandMount()
     </Binding>
+    <Binding name="MOUNTRANDOMIZER_GROUNDSUMMON">
+        MountRandomizer:RandMount("Ground")
+    </Binding>
+    <Binding name="MOUNTRANDOMIZER_FLYINGSUMMON">
+        MountRandomizer:RandMount("Flying")
+    </Binding>
+    <Binding name="MOUNTRANDOMIZER_WATERSUMMON">
+        MountRandomizer:RandMount("Water")
+    </Binding>
 </Bindings>
