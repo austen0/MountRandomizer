@@ -872,13 +872,12 @@ local mountDB = {
         professionReq = 1,
         npcID = 24654,
     }, {
-    -- TODO: uncomment after implementing handling for water mounts.
-    --     name = "Sea Turtle",
-    --     type = 3,
-    --     speed = 1.6,
-    --     ridingLevelReq = 75,
-    --     npcID = 34187,
-    -- }, {
+        name = "Sea Turtle",
+        type = 3,
+        speed = 1.6,
+        ridingLevelReq = 75,
+        npcID = 34187,
+    }, {
         name = "Flying Carpet",
         type = 2,
         speed = 2.5,
