@@ -3,6 +3,8 @@ World of Warcraft add-on for summoning random mounts.
 
 ## Pre-Release Usage Instructions
 
+### Setup
+
 1.  Unzip to `...\World of Warcraft\_classic_\Interface\AddOns\`.
 1.  Which type (eg. apprentice/journeyman/expert/master) of mounts to randomly summon from can be
     set in the interface options.
@@ -14,6 +16,18 @@ World of Warcraft add-on for summoning random mounts.
 1.  Create a macro that calls `/randmount` and add to action bar (can also just be invoked from
     chat).
     -   `/randmount <ground|flying|water>` to force summon a specific type.
+
+### Blacklisting
+
+To add a mount to the blacklist and prevent it from being summoned:
+-   `/run MountRandomizer:BlacklistMount(<mount id>)`
+
+For example, to blacklist the TBC boosty mount:
+-   `/run MountRandomizer:BlacklistMount(176708)`
+
+If you want to remove it from the blacklist:
+-   `/run MountRandomizer:RemoveMountFromBlacklist(176708)`
+
 
 ## TODO for v1.0
 
