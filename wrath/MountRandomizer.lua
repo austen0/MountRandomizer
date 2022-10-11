@@ -64,7 +64,9 @@ function MountRandomizer:RandMount(forcedType)
         summonQuery.preferredType = "Water"
     elseif IsFlyableArea() and forcedType == nil then
         if MountRandomizer.GetPlayerContinent() ~= "Northrend" or IsSpellKnown(54197) then
-            summonQuery.preferredType = "Flying"
+            if GetRealZoneText() ~= "Dalaran" or GetMinimapZoneText() == "Krasus' Landing" then
+                summonQuery.preferredType = "Flying"
+            end
         end
     end 
 
