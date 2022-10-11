@@ -1476,6 +1476,16 @@ function MountDB:Query(query)
     end
     results_tmp = CopyTable(results)
 
+    -- Omit mammoth's when in The Underbelly.
+    if GetMinimapZoneText() == "The Underbelly" then
+        for _, mount in pairs(results_tmp) do
+            if string.find(string.lower(mount.name), "mammoth") then 
+                results = RemoveByID(results, mount.npcID)
+            end
+        end
+    end
+    results_tmp = CopyTable(results)
+
     -- Omit profession mounts if the associated profession isn't currently trained.
     for _, mount in pairs(results_tmp) do
         if mount.professionReq ~= nil then
