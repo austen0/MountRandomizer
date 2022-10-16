@@ -673,7 +673,7 @@ local mountDB = {
         speed = 2,
         ridingLevelReq = 150,
         factionReq = 1,
-        npcID = 31861,
+        npcID = 31850,
     }, {
         name = "Black Battlestrider",
         type = 1,
