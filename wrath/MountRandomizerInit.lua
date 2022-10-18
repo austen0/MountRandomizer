@@ -5,6 +5,8 @@ MountRandomizer = {
         minGroundSpeed = 1.6,
         minFlyingSpeed = 2.5,
         mountBlacklist = {},
+        noLargeInCities = true,
+        noLargeInInstances = true,
     },
 }
 
@@ -166,13 +168,39 @@ function f:SetupOptions()
     DismountWhileFlyingCheckboxText:SetText("Dismount while flying")
     dismountWhileFlyingCheckbox:SetChecked(MountRandomizerDB.dismountWhileFlying)
 
+    -- Create a checkbox to allow toggling whether large mounts will be summoned in major cities.
+    local noLargeInCitiesCheckbox = CreateFrame(
+        "CheckButton",
+        "NoLargeInCitiesCheckbox",
+        self.panel,
+        "InterfaceOptionsCheckButtonTemplate")
+    noLargeInCitiesCheckbox:SetPoint("TOPLEFT", "DismountWhileFlyingCheckbox", "BOTTOMLEFT", 0, -5)
+    noLargeInCitiesCheckbox:SetScript("OnClick", function(self)
+        MountRandomizerDB.noLargeInCities = self:GetChecked()
+    end)
+    NoLargeInCitiesCheckboxText:SetText("No large mounts in cities")
+    noLargeInCitiesCheckbox:SetChecked(MountRandomizerDB.noLargeInCities)
+
+    -- Create a checkbox to allow toggling whether large mounts will be summoned in instances.
+    local noLargeInInstancesCheckbox = CreateFrame(
+        "CheckButton",
+        "NoLargeInInstancesCheckbox",
+        self.panel,
+        "InterfaceOptionsCheckButtonTemplate")
+    noLargeInInstancesCheckbox:SetPoint("TOPLEFT", "NoLargeInCitiesCheckbox", "BOTTOMLEFT", 0, -5)
+    noLargeInInstancesCheckbox:SetScript("OnClick", function(self)
+        MountRandomizerDB.noLargeInInstances = self:GetChecked()
+    end)
+    NoLargeInInstancesCheckboxText:SetText("No large mounts in instances")
+    noLargeInInstancesCheckbox:SetChecked(MountRandomizerDB.noLargeInInstances)
+
     -- Create a button that will automatically create a macro that executes /randmount.
     local createMacroButton = CreateFrame(
         "Button",
         "CreateMacroButton",
          self.panel,
          "UIPanelButtonTemplate")
-	createMacroButton:SetPoint("TOPLEFT", "DismountWhileFlyingCheckbox", "BOTTOMLEFT", 0, -5)
+	createMacroButton:SetPoint("TOPLEFT", "NoLargeInInstancesCheckbox", "BOTTOMLEFT", 0, -5)
     createMacroButton:SetText("Create /randmount macro")
 	createMacroButton:SetWidth(175)
 	createMacroButton:SetScript("OnClick", function()
