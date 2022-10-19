@@ -1,5 +1,6 @@
 # MountRandomizer
-World of Warcraft add-on for summoning random mounts.
+World of Warcraft add-on for summoning random mounts. The appropriate mount type
+(ground/flying/water) is automatically determined based on zone and other factors.
 
 ## Usage Instructions
 
