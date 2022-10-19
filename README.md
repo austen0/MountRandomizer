@@ -1,26 +1,23 @@
 # MountRandomizer
 World of Warcraft add-on for summoning random mounts.
 
-## Pre-Release Usage Instructions
+## Usage Instructions
 
 ### Setup
 
-1.  Unzip to `...\World of Warcraft\_classic_\Interface\AddOns\`.
-1.  Which type (eg. apprentice/journeyman/expert/master) of mounts to randomly summon from can be
-    set in the interface options.
-    -   By default, only very fast mounts will be summoned for ground and flying.
-    -   Flying mounts are always summoned when able.
+1.  Install from [GitHub releases](https://github.com/austen0/MountRandomizer/releases/latest) or
+    [Curse](https://www.curseforge.com/wow/addons/mountrandomizer).
+1.  Configure in the Interface Options:
     ![interface options](img/interface_options.png)
 1.  Set up keybindings.
     ![keybindings](img/keybindings.png)
-1.  Create a macro that calls `/randmount` and add to action bar (can also just be invoked from
-    chat).
+1.  Create a macro to call from your action bars.
     -   `/randmount <ground|flying|water>` to force summon a specific type.
 
-### Blacklisting
+### Blacklisting Mounts
 
 To add a mount to the blacklist and prevent it from being summoned:
--   `/run MountRandomizer:BlacklistMount(<mount id>)`
+-   `/run MountRandomizer:BlacklistMount(<npc id>)`
 
 For example, to blacklist the TBC boosty mount:
 -   `/run MountRandomizer:BlacklistMount(176708)`
@@ -28,10 +25,15 @@ For example, to blacklist the TBC boosty mount:
 If you want to remove it from the blacklist:
 -   `/run MountRandomizer:RemoveMountFromBlacklist(176708)`
 
+## Known Issues
+
+-   Does not cancel shapeshift for druids. Changing form is a protected function, so implementing
+    this functionality is infeasible. Recommendation is to add `/cancelform [nocombat]` prior to
+    `/randmount` in the macro.
 
 ## TODO for v1.0
 
-- [ ] upload to curse
+- [x] upload to curse
 - [x] handle cold-weather flying
 - [x] handle water mounts
 - [x] set up automatic packaging workflow
